@@ -13,4 +13,4 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', 'HomeController@index');
+Route::post('/try', 'OrderController@pay');

@@ -14,7 +14,7 @@ class AddAdminIdToOrders extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->unsignedInteger('admin_id');
+            $table->unsignedInteger('admin_id')->nullable();
             $table->foreign('admin_id')->references('id')->on('admins');
         });
     }
