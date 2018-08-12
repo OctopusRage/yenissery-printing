@@ -19,5 +19,10 @@ class Helper
         return $fileName;
     }
 
+    public static function validateOrderStatus($status){
+        $acceptedStatus = ['unpaid', 'on_progress', 'finished'];
+        $result = array_search($status, $acceptedStatus) === false ? false : true;
+        return $result;
+    }
 
 }

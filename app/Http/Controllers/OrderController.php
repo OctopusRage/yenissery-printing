@@ -10,13 +10,13 @@ use App\Utils\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except('pay');
+//        $this->middleware('auth')->except('pay');
+        $this->middleware('auth');
     }
 
 
@@ -41,6 +41,7 @@ class OrderController extends Controller
             $order = new Order();
             $order->user_id     = $user->id;
             $order->quantity    = $request->quantity;
+            $order->status      = 'unpaid';
             $order->save();
 
             $orderProduct               = new OrderProduct();

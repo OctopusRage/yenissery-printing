@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    public function user() {
+        $this->belongsTo('App\Models\User');
+    }
     public function products() {
         $this->belongsToMany('App\Models\Product', 'order_product');
     }
