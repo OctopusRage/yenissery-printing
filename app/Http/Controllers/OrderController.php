@@ -13,11 +13,11 @@ use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
-    public function __construct()
-    {
-//        $this->middleware('auth')->except('pay');
-        $this->middleware('auth');
-    }
+//     public function __construct()
+//     {
+// //        $this->middleware('auth')->except('pay');
+//         $this->middleware('auth');
+//     }
 
 
     // kudu login
@@ -65,7 +65,9 @@ class OrderController extends Controller
     }
 
     public function index(Request $request) {
+        
         $products = Product::all();
+        return view('landing.order',compact('products'));
         $user     = Auth::user();
         $orderedProducts = $user->orders()->with('productsWithDetails');
         return view('order form', compact('products', $orderedProducts));
