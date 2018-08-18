@@ -17,10 +17,8 @@
 Route::get('/', 'HomeController@index')->name('landing.home');
 Route::get('/order', 'OrderController@index')->name('landing.order');
 Route::post('/order', 'OrderController@create')->name('landing.order.create');
-Route::view('/logintest','authuser.login');
-Route::view('/reg','authuser.register');
-Route::view('/forgot','authuser.reset');
-Route::view('/dashboard','layouts.admin');
+Route::view('/invoice','landing.invoice');
+Route::view('/my','landing.my');
 
 Auth::routes();
 

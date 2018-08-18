@@ -13,34 +13,35 @@ use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
-//     public function __construct()
-//     {
-// //        $this->middleware('auth')->except('pay');
-//         $this->middleware('auth');
-//     }
+     public function __construct()
+     {
+ //        $this->middleware('auth')->except('pay');
+         $this->middleware('auth');
+     }
 
 
     // kudu login
     public function create(Request $request){
+//        dd($request->file('file_attachment'));
         $request->validate([
             'description'               => 'required',
-            'file_attachment'           => 'required',
+            'file_attachment'           => 'required|image',
             'finished_at_request'       => 'nullable',
             'quantity'                  => 'required',
-            'product_id'                => 'product_id',
+            'product_id'                => 'required',
         ]);
         $user = Auth::user();
 
         $product = Product::find($request->product_id);
         if(empty($product)) {
-            return view('order gagal view');
+            $request->session()->flash('error','Produk Tidak Ditemukan');
+            return back();
         }
 
         DB::beginTransaction();
         try {
             $order = new Order();
             $order->user_id     = $user->id;
-            $order->quantity    = $request->quantity;
             $order->status      = 'unpaid';
             $order->save();
 
@@ -49,6 +50,7 @@ class OrderController extends Controller
             $orderProduct->product_id   = $request->product_id;
             $orderProduct->quantity     = $request->quantity;
             $orderProduct->descriptions = $request->description;
+            $orderProduct->quantity     = $request->quantity;
             $orderProduct->file_attachment = Helper::upload($request->file('file_attachment'));
             $orderProduct->save();
 
@@ -57,20 +59,23 @@ class OrderController extends Controller
         } catch (\Exception $exception) {
             DB::rollBack();
             //diarahkan ke suatu page gagal
-            return response('ke gagal order page');
+            $request->session()->flash('error',$exception->getMessage());
+            return back();
         }
         DB::commit();
-        return response('ke sukses order');
+        return redirect(route('landing.order'))->with('order', $order);
 
     }
 
     public function index(Request $request) {
         
         $products = Product::all();
-        return view('landing.order',compact('products'));
+//        return view('landing.order',compact('products'));
         $user     = Auth::user();
-        $orderedProducts = $user->orders()->with('productsWithDetails');
-        return view('order form', compact('products', $orderedProducts));
+//        dd($user->id);
+        $orderedProduct = $user->orders()->with('productsWithDetails')->latest()->first();
+//        dd($orderedProduct->productsWithDetails->first()->pivot->quantity);
+        return view('landing.order', compact('products', 'orderedProduct'));
     }
 
     public function pay(Request $request) {

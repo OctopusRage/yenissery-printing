@@ -2,11 +2,23 @@
 
 @section('content')
 <div id="content">
+  @if ($errors->any())
+    <div class="alert alert-danger">
+      <ul>
+        @foreach ($errors->all() as $error)
+          <li>{{ $error }}</li>
+        @endforeach
+        @if(session('error'))
+          <li>{{session('error')}}</li>
+        @endif
+      </ul>
+    </div>
+  @endif
         <div class="container">
           <div class="row">
             <div id="checkout" class="col-lg-9">
               <div class="box border-bottom-0">
-                <form method="post" action="{{route('landing.order.create')}}">
+                <form method="post" enctype="multipart/form-data" action="{{route('landing.order.create')}}">
                  @csrf
                   <div class="content">
                     <div class="row">
@@ -66,25 +78,21 @@
                 <div class="box-header mt-0">
                   <h3>Order summary</h3>
                 </div>
-                <p class="text-muted text-small">Shipping and additional costs are calculated based on the values you have entered.</p>
+
                 <div class="table-responsive">
                   <table class="table">
                     <tbody>
                       <tr>
-                        <td>Order subtotal</td>
-                        <th>$446.00</th>
+                        <td>Nama Produk</td>
+                        <th>{{ !empty($orderedProduct) ? $orderedProduct->productsWithDetails()->first()->name : ""}}</th>
                       </tr>
                       <tr>
-                        <td>Shipping and handling</td>
-                        <th>$10.00</th>
-                      </tr>
-                      <tr>
-                        <td>Tax</td>
-                        <th>$0.00</th>
+                        <td>Jumlah Pesan</td>
+                        <th>{{ !empty($orderedProduct) ? $orderedProduct->productsWithDetails()->first()->pivot->quantity : ""}}</th>
                       </tr>
                       <tr class="total">
-                        <td>Total</td>
-                        <th>$456.00</th>
+                        <td>Total Bayar</td>
+                        <th>{{ !empty($orderedProduct) ? $orderedProduct->total_price : ""}}</th>
                       </tr>
                     </tbody>
                   </table>

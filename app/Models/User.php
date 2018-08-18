@@ -12,7 +12,7 @@ class User extends Authenticatable
     use Notifiable;
 
     public function orders(){
-        $this->hasMany('App\Models\Order');
+        return $this->hasMany('App\Models\Order', 'user_id');
     }
 
     protected $fillable = [ 'name', 'email', 'password', 'phone', 'is_active'];

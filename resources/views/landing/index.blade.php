@@ -75,14 +75,18 @@
             <button type="button" data-toggle="collapse" data-target="#navigation" class="navbar-toggler btn-template-outlined"><span class="sr-only">Toggle navigation</span><i class="fa fa-align-justify"></i></button>
             <div id="navigation" class="navbar-collapse collapse">
               <ul class="nav navbar-nav ml-auto">
-                <li class="nav-item    active"><a href="{{route('landing.home')}}" >Home <b class="caret"></b></a></li>
-                <li class="nav-item  menu-large"><a href="{{route('landing.order')}}" >Order<b class="caret"></b></a></li>
-                <li class="nav-item  menu-large"><a href="#" >About<b class="caret"></b></a></li>
-                <li class="nav-item dropdown"><a href="javascript: void(0)" data-toggle="dropdown" class="dropdown-toggle" aria-expanded="false"><i class="fa fa-user"></i> <b class="caret"></b></a>
+                <li class="nav-item    active"><a href="{{route('landing.home')}}" >Beranda<b class="caret"></b></a></li>
+                <li class="nav-item  menu-large"><a href="{{route('landing.order')}}" >Pesan<b class="caret"></b></a></li>
+                <li class="nav-item  menu-large"><a href="#" >Tentang<b class="caret"></b></a></li>
+                <li class="nav-item dropdown"><a href="javascript: void(0)" data-toggle="dropdown" class="dropdown-toggle" aria-expanded="false">
+                    <i class="fa fa-user"></i>
+                    @if(Auth::user())
+                      {{Auth::user()->name}}
+                    @endif
+                    <b class="caret"></b></a>
                   <ul class="dropdown-menu" style="display: none;">
                     @if(Auth::user() )
-                         <li class="dropdown-item"><a href="#" class="nav-link">Data Diri</a></li>
-                         <li class="dropdown-item"><a href="#" class="nav-link">Invoice</a></li>
+                         <li class="dropdown-item"><a href="#" class="nav-link">Halaman Pelanggan</a></li>
                          <li class="dropdown-item"><a href="{{route('logout')}}" class="nav-link">Logout</a></li>
 
                     @else
@@ -118,7 +122,7 @@
           <div class="container">
             <div class="row">
               <div class="col-lg-4 text-center-md">
-                <p>&copy; 2018. Your company / name goes here</p>
+                <p>&copy; 2018. Yenissery Advertising</p>
               </div>
               <div class="col-lg-8 text-right text-center-md">
                 <p>Template design by <a href="https://bootstrapious.com/free-templates">Bootstrapious Templates </a></p>

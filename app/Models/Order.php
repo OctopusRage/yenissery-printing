@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     public function user() {
-        $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\Models\User');
     }
     public function products() {
-        $this->belongsToMany('App\Models\Product', 'order_product');
+        return $this->belongsToMany('App\Models\Product', 'order_product');
     }
 
     public function productsWithDetails() {
-        $this->belongsToMany('App\Models\Product', 'order_product')->withPivot(['quantity', 'finished_at_request', 'file_attachment']);
+        return $this->belongsToMany('App\Models\Product', 'order_product')->withPivot(['quantity', 'finished_at_request', 'file_attachment']);
     }
 
     //**
@@ -27,7 +27,7 @@ class Order extends Model
     //*/STATUS ORDER
 
     public function payment(){
-        $this->hasOne('App\Models\Payment');
+        return $this->hasOne('App\Models\Payment');
     }
 
 }

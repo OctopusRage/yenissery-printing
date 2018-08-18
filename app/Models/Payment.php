@@ -8,6 +8,6 @@ class Payment extends Model
 {
     //
     public function order(){
-        $this->belongsTo('App\Models\Order');
+        return $this->belongsTo('App\Models\Order');
     }
 }
