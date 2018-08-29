@@ -17,7 +17,7 @@ class UserController extends Controller
     public function index()
     {
         $users = Admin::paginate();
-        return view('admin user index', compact($users));
+        return view('admin.karyawan.index', compact('users'));
     }
 
     /**
@@ -27,7 +27,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('create view');
+        return view('admin.karyawan.create');
     }
 
 
@@ -51,7 +51,7 @@ class UserController extends Controller
         $user->password = Hash::make($request->password);
         $user->type = $request->type;
         $user->save();
-        return view('success page');
+        return redirect()->route('karyawan.index');
     }
 
     /**
@@ -63,7 +63,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = Admin::find($id);
-        return view('success page', compact($user));
+        return view('admin.karyawan.edit', compact('user'));
     }
 
     /**
@@ -87,7 +87,7 @@ class UserController extends Controller
         $user->password = Hash::make($request->password);
         $user->type = $request->type;
         $user->save();
-        return view('success page');
+        return route('karyawan.edit');
     }
 
     /**
@@ -110,6 +110,6 @@ class UserController extends Controller
     public function show($id)
     {
         $user = Admin::find($id);
-        return view('success page', compact($user));
+        return view('admin.karyawan.edit', compact('user'));
     }
 }

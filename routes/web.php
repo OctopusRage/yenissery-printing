@@ -17,8 +17,22 @@
 Route::get('/', 'HomeController@index')->name('landing.home');
 Route::get('/order', 'OrderController@index')->name('landing.order');
 Route::post('/order', 'OrderController@create')->name('landing.order.create');
+
 Route::view('/invoice','landing.invoice');
 Route::view('/my','landing.my');
+
+Route::prefix('dashboard')->namespace('Admin')->group(function (){
+    Route::view('/','admin.index');
+
+    Route::resource('karyawan', 'UserController')->except('destroy');
+    Route::resource('product', 'ProductController');
+
+    Route::prefix('order')->group(function () {
+        Route::get('/', 'OrderController@index')->name('order.index');
+        Route::post('/updateStatus', 'OrderController@updateStatus')->name('order.updateStatus');
+        Route::post('/show', 'OrderController@show')->name('order.show');
+    });
+});
 
 Auth::routes();
 

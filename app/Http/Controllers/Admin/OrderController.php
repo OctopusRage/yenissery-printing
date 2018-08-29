@@ -11,7 +11,7 @@ class OrderController extends Controller
 {
     public function index(Request $request){
         $orders = Order::with(['productsWithDetails', 'user']);
-        return view('order list admin page', compact($orders));
+        return view('admin.order.index', compact($orders));
     }
 
     public function updateStatus(Request $request, $id) {
@@ -25,13 +25,13 @@ class OrderController extends Controller
         $order = Order::find($id);
         $order->status = $request->status;
         $order->save();
-        return response('ok');
+        return redirect()->route('admin.order.index');
 
     }
 
     public function show(Request $request, $id) {
         $order = Order::find($id);
         $orderedProducts = $order->products;
-        return view('order detail', compact($order, $orderedProducts));
+        return view('admin.order.edit', compact('order','orderedProducts'));
     }
 }
