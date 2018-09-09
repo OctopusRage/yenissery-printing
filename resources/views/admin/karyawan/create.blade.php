@@ -20,14 +20,14 @@
                 <div class="col-lg-10">
                     <div class="card">
                         <div class="card-header">
-                            <strong>Tambah Data Produk</strong>
+                            <strong>Tambah Data Karyawan</strong>
                         </div>
                         <div class="card-body card-block">
-                            <form action="{{route('product.store')}}" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            <form action="{{route('karyawan.store')}}" method="post" enctype="multipart/form-data" class="form-horizontal">
                                 @csrf
                                 <div class="row form-group">
                                     <div class="col col-md-3">
-                                        <label for="text-input" class=" form-control-label">Nama Produk</label>
+                                        <label for="text-input" class=" form-control-label">Nama Karyawan</label>
                                     </div>
                                     <div class="col-12 col-md-9">
                                         <input type="text" id="name" value="{{old('name')}}" name="name" placeholder="Nama Produk" class="form-control">
@@ -37,39 +37,42 @@
 
                                 <div class="row form-group">
                                     <div class="col col-md-3">
-                                        <label for="textarea-input" class=" form-control-label">Deskripsi Produk</label>
+                                        <label for="textarea-input" class=" form-control-label">Email</label>
                                     </div>
                                     <div class="col-12 col-md-9">
-                                        <textarea name="description" id="description" rows="9" placeholder="Deskripsi" class="form-control"></textarea>
+                                        <input type="text" id="" value="{{old('email')}}" name="email" placeholder="Email" class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="row form-group">
                                     <div class="col col-md-3">
-                                        <label for="text-input" class=" form-control-label">Harga</label>
+                                        <label for="textarea-input" class=" form-control-label">Type</label>
                                     </div>
                                     <div class="col-12 col-md-9">
-                                        <input type="text" id="price" value="{{old('price')}}" name="price" placeholder="Harga" class="form-control">
+                                        <select name="type"  class="form-control">
+                                            <option value="2">Karyawan</option>
+                                            <option value="1">Admin</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="text-input" class=" form-control-label">Password</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input type="password" value="{{old('password')}}" name="password" placeholder="Password" class="form-control">
                                     </div>
 
                                 </div>
 
                                 <div class="row form-group">
                                     <div class="col col-md-3">
-                                        <label for="file-input" class=" form-control-label">Gambar Produk</label>
+                                        <label for="text-input" class=" form-control-label">Password Confirmation</label>
                                     </div>
-                                    <div class="col-12 col-md-5 photo-wrapper" >
-                                        <input type="file" multiple name="photos[]" class="form-control-file">
+                                    <div class="col-12 col-md-9">
+                                        <input type="password"  value="{{old('password_confirmation')}}" name="password_confirmation" placeholder="Password Confirmation" class="form-control">
                                     </div>
-                                    {{--<div class="col-12 col-md-4">--}}
-                                        {{--<button type="button" id="add-pict"class="btn btn-primary btn-sm">--}}
-                                            {{--<i class="fa fa-upload"></i> Tambah Gambar--}}
-                                        {{--</button>--}}
-                                    {{--</div>--}}
-                                </div>
-
-                                <div class="row form-group">
-
 
                                 </div>
 

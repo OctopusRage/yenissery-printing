@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Admin;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Psy\Formatter\Formatter;
 
 class UserController extends Controller
 {
@@ -43,6 +45,7 @@ class UserController extends Controller
             'name'  => 'required',
             'email'  => 'required',
             'password'  => 'required',
+            'password_confirmation'  => 'same:password',
             'type'  => 'required',
         ]);
         $user = new Admin();
@@ -50,7 +53,15 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->type = $request->type;
+        $user->is_active = true;
         $user->save();
+        return redirect()->route('karyawan.index');
+    }
+
+    public function activate($id) {
+        $admin = Admin::find($id);
+        $admin->is_active = !$admin->is_active;
+        $admin->save();
         return redirect()->route('karyawan.index');
     }
 
@@ -79,6 +90,7 @@ class UserController extends Controller
             'name'  => 'required',
             'email'  => 'required',
             'password'  => 'required',
+            'password_confirmation'  => 'same:password',
             'type'  => 'required',
         ]);
         $user = Admin::find($id);

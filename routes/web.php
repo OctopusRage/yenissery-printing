@@ -25,6 +25,7 @@ Route::prefix('dashboard')->namespace('Admin')->group(function (){
     Route::view('/','admin.index');
 
     Route::resource('karyawan', 'UserController')->except('destroy');
+    Route::get('karyawan/{id}/activate', 'UserController@activate')->name('karyawan.activate');
     Route::resource('product', 'ProductController');
 
     Route::prefix('order')->group(function () {

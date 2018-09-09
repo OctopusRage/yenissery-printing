@@ -58,7 +58,7 @@ class ProductController extends Controller
             'name'          => 'required',
             'description'   => 'required',
             'price'         => 'required',
-            'photos'        => 'nullable|file'
+            'photos'        => 'nullable'
         ]);
 
 
@@ -88,7 +88,7 @@ class ProductController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->withErrors($e->getMessage());
+            return redirect()->back()->withErrors($e->getMessage())->withInput($request->all());
         }
 
         DB::commit();

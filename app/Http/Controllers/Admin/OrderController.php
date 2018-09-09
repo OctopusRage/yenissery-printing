@@ -10,8 +10,8 @@ use App\Http\Controllers\Controller;
 class OrderController extends Controller
 {
     public function index(Request $request){
-        $orders = Order::with(['productsWithDetails', 'user']);
-        return view('admin.order.index', compact($orders));
+        $orders = Order::with(['productsWithDetails', 'user'])->get();
+        return view('admin.order.index', compact('orders'));
     }
 
     public function updateStatus(Request $request, $id) {
