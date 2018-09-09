@@ -30,7 +30,7 @@ Route::prefix('dashboard')->namespace('Admin')->group(function (){
 
     Route::prefix('order')->group(function () {
         Route::get('/', 'OrderController@index')->name('order.index');
-        Route::post('/updateStatus', 'OrderController@updateStatus')->name('order.updateStatus');
+        Route::post('/{id}/updateStatus', 'OrderController@updateStatus')->name('order.updateStatus');
         Route::post('/show', 'OrderController@show')->name('order.show');
     });
 });

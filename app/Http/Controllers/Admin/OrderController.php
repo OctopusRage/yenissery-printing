@@ -11,7 +11,8 @@ class OrderController extends Controller
 {
     public function index(Request $request){
         $orders = Order::with(['productsWithDetails', 'user'])->get();
-        return view('admin.order.index', compact('orders'));
+        $statusOrder = ['unpaid', 'on_progress', 'finished'];
+        return view('admin.order.index', compact('orders', 'statusOrder'));
     }
 
     public function updateStatus(Request $request, $id) {
@@ -20,12 +21,12 @@ class OrderController extends Controller
         ]);
         $isStatusValid = Helper::validateOrderStatus($request->status);
         if(!$isStatusValid) {
-            return response('gagal update status ');
+            return redirect()->back()->withErrors('status tak valid');
         }
         $order = Order::find($id);
         $order->status = $request->status;
         $order->save();
-        return redirect()->route('admin.order.index');
+        return redirect()->route('order.index');
 
     }
 

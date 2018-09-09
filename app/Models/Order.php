@@ -19,8 +19,6 @@ class Order extends Model
 
     //**
     //  unpaid
-    //  waiting_confirmation
-    //  on_queue
     //  on_progress
     //  finished
     //

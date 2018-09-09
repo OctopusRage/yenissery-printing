@@ -5,6 +5,18 @@
     <div class="main-content">
         <div class="section__content section__content--p30">
             <div class="container-fluid">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                            @if(session('error'))
+                                <li>{{session('error')}}</li>
+                            @endif
+                        </ul>
+                    </div>
+                @endif
 
 
                 <div class="row">
@@ -31,8 +43,8 @@
                                     <th>ID</th>
                                     <th>Nama</th>
                                     <th>Email</th>
-                                    <th>Status Order</th>
-                                    <th>Total Price</th>
+                                    <th>Harga</th>
+                                    <th>Pesanan</th>
                                     <th>Ubah status</th>
                                 </tr>
                                 </thead>
@@ -48,12 +60,22 @@
                                         <td>{{$order->id}}</td>
                                         <td>{{$order->user->name}}</td>
                                         <td class="desc">{{$order->user->email}}</td>
-                                        <td>{{$order->status == true ? "Active": "Non-active"}}</td>
                                         <td>{{$order->total_price }}</td>
+                                        <td>{{implode(', ', $order->productsWithDetails()->pluck('name')->toArray())}}</td>
                                         <td>
-                                            <div class="table-data-feature">
-
-                                            </div>
+                                            <form action="{{route('order.updateStatus', $order->id)}}" method="post">
+                                                @csrf
+                                                <select name="status">
+                                                    @foreach($statusOrder as $status)
+                                                        <option value="{{$status}}"
+                                                                @if($status==$order->status)
+                                                                selected="true"
+                                                                @endif>{{$status}}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <input type="submit" value="Update" class="au-btn au-btn-icon au-btn--green au-btn--small"/>
+                                            </form>
                                         </td>
                                     </tr>
                                     <tr class="spacer"></tr>
