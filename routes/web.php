@@ -22,7 +22,10 @@ Route::view('/invoice','landing.invoice');
 Route::view('/my','landing.my');
 
 Route::prefix('dashboard')->namespace('Admin')->group(function (){
-    Route::view('/','admin.index');
+    Route::view('login', 'admin.login')->name('dashboard.login');
+    Route::post('login', 'AuthController@auth')->name('dashboard.auth');
+    Route::get('logout', 'AuthController@logout')->name('dashboard.logout');
+    Route::view('/','admin.index')->name('dashboard');
 
     Route::resource('karyawan', 'UserController')->except('destroy');
     Route::get('karyawan/{id}/activate', 'UserController@activate')->name('karyawan.activate');

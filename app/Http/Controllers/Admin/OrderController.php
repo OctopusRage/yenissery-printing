@@ -9,6 +9,11 @@ use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth.admin');
+    }
+
     public function index(Request $request){
         $orders = Order::with(['productsWithDetails', 'user'])->get();
         $statusOrder = ['unpaid', 'on_progress', 'finished'];
