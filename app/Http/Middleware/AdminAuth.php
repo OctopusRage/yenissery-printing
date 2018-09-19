@@ -25,7 +25,7 @@ class AdminAuth
         } else {
             $auth = $userData;
         }
-        if(empty($auth)) return response('Unauthorized', 401);
+        if(empty($auth)) return redirect()->route('dashboard.login');
 
         $token = str_replace('Basic ', '', $auth);
         $token = base64_decode($token);
@@ -36,9 +36,9 @@ class AdminAuth
             'email' => $email,
         ])->first();
 
-        if(empty($admin)) return response('Unauthorized', 401);
+        if(empty($admin)) return redirect()->route('dashboard.login');
 
-        if(!Hash::check($passwordHash, $admin->password)) return response('Unauthorized', 401);
+        if(!Hash::check($passwordHash, $admin->password)) return redirect()->route('dashboard.login');
 
         $request->admin = $admin;
         return $next($request);
