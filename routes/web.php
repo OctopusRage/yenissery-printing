@@ -25,17 +25,21 @@ Route::prefix('dashboard')->namespace('Admin')->group(function (){
     Route::view('login', 'admin.login')->name('dashboard.login');
     Route::post('login', 'AuthController@auth')->name('dashboard.auth');
     Route::get('logout', 'AuthController@logout')->name('dashboard.logout');
-    Route::view('/','admin.index')->name('dashboard');
 
-    Route::resource('karyawan', 'UserController')->except('destroy');
-    Route::get('karyawan/{id}/activate', 'UserController@activate')->name('karyawan.activate');
-    Route::resource('product', 'ProductController');
+    Route::middleware('auth.admin')->group(function(){
+        Route::view('/','admin.index')->name('dashboard');
 
-    Route::prefix('order')->group(function () {
-        Route::get('/', 'OrderController@index')->name('order.index');
-        Route::post('/{id}/updateStatus', 'OrderController@updateStatus')->name('order.updateStatus');
-        Route::post('/show', 'OrderController@show')->name('order.show');
+        Route::resource('karyawan', 'UserController')->except('destroy');
+        Route::get('karyawan/{id}/activate', 'UserController@activate')->name('karyawan.activate');
+        Route::resource('product', 'ProductController');
+
+        Route::prefix('order')->group(function () {
+            Route::get('/', 'OrderController@index')->name('order.index');
+            Route::post('/{id}/updateStatus', 'OrderController@updateStatus')->name('order.updateStatus');
+            Route::post('/show', 'OrderController@show')->name('order.show');
+        });
     });
+
 });
 
 Auth::routes();
